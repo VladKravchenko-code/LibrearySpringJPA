@@ -1,10 +1,22 @@
 package ru.vlad.springcourse.models;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.persistence.*;
 import javax.validation.constraints.*;
 
+@Entity
+@Table(name = "Person")
 public class Person {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
+    @Column(name = "name")
     @NotEmpty(message = "Колонка имя не должна быть пустой")
     @Size(min = 2, max = 50, message = "ФИО должно содержать от 2 до 50 символов")
     @Pattern(regexp = "[А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+ [А-ЯЁ][а-яё]+", message = "Не верно указано ФИО")
@@ -12,6 +24,7 @@ public class Person {
 
     @Min(value = 1900, message = "Год рождения должен быть больше 1900")
     @Max(value = 2025, message = "Неверный год рождения")
+    @Column(name = "age")
     private int age;
 
     public Person() {
