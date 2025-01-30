@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Person")
@@ -27,6 +29,9 @@ public class Person {
     @Column(name = "age")
     private int age;
 
+    @OneToMany(mappedBy = "owner")
+    private List<Book> books;
+
     public Person() {
 
     }
@@ -35,6 +40,17 @@ public class Person {
         this.id = id;
         this.name = name;
         this.age = age;
+    }
+
+    public List<Book> getBooks() {
+        if (books == null){
+            books = new ArrayList<>();
+        }
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     public int getAge() {

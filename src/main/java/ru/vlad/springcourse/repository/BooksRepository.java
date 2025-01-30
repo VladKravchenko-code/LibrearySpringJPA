@@ -3,16 +3,11 @@ package ru.vlad.springcourse.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.vlad.springcourse.models.Book;
-import ru.vlad.springcourse.models.Person;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
-public interface PeopleRepository extends JpaRepository<Person, Integer> {
+public interface BooksRepository extends JpaRepository<Book, Integer> {
 
-    Person findByName(String name);
-
-    void deleteById(int id);
-
+    List<Book> findByOwner_Id(int id);
 }

@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.vlad.springcourse.Service.BooksService;
 import ru.vlad.springcourse.Service.PeopleService;
-import ru.vlad.springcourse.dao.PersonDAO;
 import ru.vlad.springcourse.models.Person;
 import ru.vlad.springcourse.util.PersonValidator;
 
@@ -18,11 +18,13 @@ public class PeopleController {
 
     private final PeopleService peopleService;
     private final PersonValidator personValidator;
+    private final BooksService booksService;
 
     @Autowired
-    public PeopleController(PersonValidator personValidator, PeopleService peopleService) {
+    public PeopleController(PersonValidator personValidator, PeopleService peopleService, BooksService booksService) {
         this.personValidator = personValidator;
         this.peopleService = peopleService;
+        this.booksService = booksService;
     }
 
     @GetMapping()
@@ -34,7 +36,7 @@ public class PeopleController {
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
         model.addAttribute("person", peopleService.findById(id).orElse(null));
-//        model.addAttribute("books", personDAO.displayAllBooksOnePerson(id));
+        model.addAttribute("books", booksService.findByOwnerId(id));
         return "people/show";
     }
 
