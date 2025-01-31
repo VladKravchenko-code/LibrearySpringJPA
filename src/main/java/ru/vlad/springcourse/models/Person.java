@@ -1,9 +1,5 @@
 package ru.vlad.springcourse.models;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.ArrayList;

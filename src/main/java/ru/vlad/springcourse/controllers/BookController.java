@@ -3,45 +3,42 @@ package ru.vlad.springcourse.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.vlad.springcourse.dao.BookDAO;
-import ru.vlad.springcourse.dao.PersonDAO;
-import ru.vlad.springcourse.models.Book;
+import ru.vlad.springcourse.Service.BooksService;
+import ru.vlad.springcourse.Service.PeopleService;
 import ru.vlad.springcourse.models.Person;
-
-import javax.validation.Valid;
+import ru.vlad.springcourse.repository.PeopleRepository;
 
 @Controller
 @RequestMapping("/books")
 public class BookController {
 
-//    private final BookDAO bookDAO;
-//    private final PersonDAO personDAO;
-//
-//    @Autowired
-//    public BookController(BookDAO bookDAO, PersonDAO personDAO) {
-//        this.bookDAO = bookDAO;
-//        this.personDAO = personDAO;
-//    }
-//
-//    @GetMapping()
-//    public String index(Model model) {
-//        model.addAttribute("books", bookDAO.index());
-//        return "/books/index";     // выводит всех
-//    }
-//
-//    @GetMapping("/{id}")
-//    public String show(@PathVariable("id") int id, Model model,
-//                       @ModelAttribute("person") Person person) {
-//        model.addAttribute("book", bookDAO.show(id));
-//        model.addAttribute("people", personDAO.index());
-//        model.addAttribute("idPersonForBook", bookDAO.checksWhichPersonHasThisBook(id));
-//        return "/books/show";    //выводит одного
-//    }
-//
+    private final BooksService booksService;
+    private final PeopleService peopleService;
+
+    @Autowired
+    public BookController(BooksService booksService, PeopleService peopleService) {
+        this.booksService = booksService;
+        this.peopleService = peopleService;
+    }
+
+    @GetMapping()
+    public String index(Model model) {
+        model.addAttribute("books", booksService.findByAll());
+        return "/books/index";     // выводит всех
+    }
+
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") int id, Model model) {
+        model.addAttribute("book", booksService.findBuId(id));
+        model.addAttribute("peopleForBook", booksService.findBuId(id).getOwner());
+        model.addAttribute("people", peopleService.findAll());
+        return "/books/show";    //выводит одного
+    }
+
 //    @PatchMapping("/{id}")
-//    public String allowsYouGiveBookPerson(@PathVariable("id") int id, @ModelAttribute("person") Person person){
+//    public String allowsYouGiveBookPerson(@PathVariable("id") int id,
+//                                          @ModelAttribute("person") Person person){
 //        if (bookDAO.checksWhichPersonHasThisBook(id) != null) {
 //            bookDAO.deletesBookFromUser(id);
 //            return "redirect:/books/{id}";

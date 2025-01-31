@@ -56,26 +56,25 @@ public class PeopleController {
         peopleService.saveAndFlush(person);
         return "redirect:/people";
     }
-//
-//    @GetMapping("/{id}/edit")
-//    public String edit(Model model, @PathVariable("id") int id) {
-//        model.addAttribute("person", personDAO.show(id));
-//        return "people/edit";
-//    }
-//
-//    @PatchMapping("/{id}/edit")
-//    public String update(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult,
-//                         @PathVariable("id") int id) {
-//        personValidator.validate(person, bindingResult);
-//
-//        if (bindingResult.hasErrors())
-//            return "people/edit";
-//
-//        personDAO.update(id, person);
-//
-//        return "redirect:/people";
-//    }
-//
+
+    @GetMapping("/{id}/edit")
+    public String edit(Model model, @PathVariable("id") int id) {
+        model.addAttribute("person", peopleService.findById(id).orElse(null));
+        return "people/edit";
+    }
+
+    @PatchMapping("/{id}/edit")
+    public String update(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult,
+                         @PathVariable("id") int id) {
+        personValidator.validate(person, bindingResult);
+
+        if (bindingResult.hasErrors())
+            return "people/edit";
+
+        peopleService.saveAndFlashUpdate(id, person);
+
+        return "redirect:/people";
+    }
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
         peopleService.deleteById(id);

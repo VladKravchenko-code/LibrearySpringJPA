@@ -5,9 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ru.vlad.springcourse.Service.PeopleService;
-import ru.vlad.springcourse.dao.PersonDAO;
 import ru.vlad.springcourse.models.Person;
-import ru.vlad.springcourse.repository.PeopleRepository;
 
 @Component
 public class PersonValidator implements Validator {
