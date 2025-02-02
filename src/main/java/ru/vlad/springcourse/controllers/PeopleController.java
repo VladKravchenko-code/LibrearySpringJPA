@@ -60,6 +60,7 @@ public class PeopleController {
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
         model.addAttribute("person", peopleService.findById(id).orElse(null));
+        //так как Optional, то без orElse(null) не заработает thymeleaf представление
         return "people/edit";
     }
 
