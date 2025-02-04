@@ -91,4 +91,19 @@ public class BookController {
         booksService.deleteById(id);
         return "redirect:/books";
     }
+
+    @GetMapping("/search")
+    public String search(@ModelAttribute("book") Book book) {
+        return "/books/search";
+    }
+
+    @GetMapping("/search/error")
+    public String searchCompleted(Model model, @ModelAttribute Book book) {
+        Book bookSearch = booksService.findByTitleStartingWith(book.getTitle());
+        if (bookSearch == null) {
+            return "redirect:/books/search";
+        }
+        model.addAttribute("id", bookSearch.getId());
+        return "redirect:/books/{id}";
+    }
 }

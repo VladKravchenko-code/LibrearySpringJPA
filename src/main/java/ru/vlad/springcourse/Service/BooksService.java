@@ -67,4 +67,8 @@ public class BooksService {
     public void deleteById(int id) {
         booksRepository.deleteById(id);
     }
+
+    public Book findByTitleStartingWith(String titleBook) {
+        return booksRepository.findByTitleLike(titleBook);
+    }
 }
