@@ -1,13 +1,13 @@
 package ru.vlad.springcourse.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.vlad.springcourse.models.Book;
 import ru.vlad.springcourse.models.Person;
 import ru.vlad.springcourse.repository.BooksRepository;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -69,6 +69,7 @@ public class BooksService {
     }
 
     public Book findByTitleStartingWith(String titleBook) {
-        return booksRepository.findByTitleLike(titleBook);
+        return booksRepository.findByTitleStartingWith(titleBook);
     }
+
 }

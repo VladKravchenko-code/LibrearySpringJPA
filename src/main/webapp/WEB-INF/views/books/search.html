@@ -5,7 +5,7 @@
     <title>Поиск</title>
 </head>
 <body>
-<form th:method="GET" th:action="@{/books/search/error}" th:object="${book}">
+<form th:method="PATCH" th:action="@{/books/search}" th:object="${book}">
     <label for="search">Введете поисковый запрос</label>
     <input th:type="text" id="search" th:field="*{title}"/>
     <br/>

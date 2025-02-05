@@ -94,16 +94,17 @@ public class BookController {
 
     @GetMapping("/search")
     public String search(@ModelAttribute("book") Book book) {
+        // Пустая книга отправляется в представление
         return "/books/search";
     }
 
-    @GetMapping("/search/error")
+    @PatchMapping("/search")
     public String searchCompleted(Model model, @ModelAttribute Book book) {
-        Book bookSearch = booksService.findByTitleStartingWith(book.getTitle());
-        if (bookSearch == null) {
-            return "redirect:/books/search";
-        }
-        model.addAttribute("id", bookSearch.getId());
-        return "redirect:/books/{id}";
+        model.addAttribute("book", booksService.findByTitleStartingWith(book.getTitle()));
+        // Тут книга уже со значением отправляется в поиск
+
+        model.addAttribute("newBook", new Book());
+        // Новая книга, чтоб поиск можно было продолжить
+        return "/books/found";
     }
 }
