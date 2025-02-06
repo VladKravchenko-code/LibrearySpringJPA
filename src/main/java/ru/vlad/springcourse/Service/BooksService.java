@@ -1,6 +1,7 @@
 package ru.vlad.springcourse.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,4 +73,15 @@ public class BooksService {
         return booksRepository.findByTitleStartingWith(titleBook);
     }
 
+    public List<Book> findAllSort(){
+        return booksRepository.findAll(Sort.by("year"));
+    }
+
+    public List<Book> findAllPages(Integer page, Integer itemsPerPage) {
+        return booksRepository.findAll(PageRequest.of(page, itemsPerPage)).getContent();
+    }
+
+    public List<Book> findAllPagesAndSorted(Integer page, Integer itemsPerPage) {
+        return booksRepository.findAll(PageRequest.of(page, itemsPerPage, Sort.by("year"))).getContent();
+    }
 }

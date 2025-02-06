@@ -26,7 +26,25 @@ public class BookController {
     }
 
     @GetMapping()
-    public String index(Model model) {
+    public String index(Model model, @RequestParam(required = false, value = "sort_by_year") boolean sort,
+                        @RequestParam(required = false, value = "page") Integer page,
+                        @RequestParam(required = false, value = "books_per_page") Integer booksPerPage) {
+        // required = false нужен, чтоб можно было писать в поисковике Books без этих параметров и все будет работать
+        if (sort && page != null && booksPerPage != null) {
+            model.addAttribute("books", booksService.findAllPagesAndSorted(page, booksPerPage));
+            return "/books/index";
+            // Сортировка и пагинация
+        }
+        if (sort) {
+            model.addAttribute("books", booksService.findAllSort());
+            return "/books/index";
+            // Сортировка
+        }
+        if (page != null && booksPerPage != null) {
+            model.addAttribute("books", booksService.findAllPages(page, booksPerPage));
+            return "/books/index";
+            // Пагинация
+        }
         model.addAttribute("books", booksService.findByAll());
         return "/books/index";     // выводит всех
     }
@@ -42,7 +60,7 @@ public class BookController {
 
     @PatchMapping("/{id}")
     public String allowsYouGiveBookPerson(@PathVariable("id") int id,
-                                          @ModelAttribute("person") Person person){
+                                          @ModelAttribute("person") Person person) {
         if (booksService.findBuId(id).getOwner() != null) {
             booksService.freesBook(id);
             return "redirect:/books/{id}";
@@ -87,7 +105,7 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id){
+    public String delete(@PathVariable("id") int id) {
         booksService.deleteById(id);
         return "redirect:/books";
     }
