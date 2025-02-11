@@ -5,6 +5,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "Book")
@@ -34,6 +36,9 @@ public class Book {
     @JoinColumn(name = "id_person", referencedColumnName = "id")
     private Person owner;
 
+    @Column(name = "date")
+    private Date date;
+
     public Book() {
 
     }
@@ -51,6 +56,18 @@ public class Book {
 
     public void setOwner(Person owner) {
         this.owner = owner;
+        if (owner != null){
+            this.date = new Date();
+        } else
+            this.date = null;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public int getId() {

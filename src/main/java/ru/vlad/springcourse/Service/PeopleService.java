@@ -3,6 +3,7 @@ package ru.vlad.springcourse.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.vlad.springcourse.models.Book;
 import ru.vlad.springcourse.models.Person;
 import ru.vlad.springcourse.repository.PeopleRepository;
 
@@ -47,4 +48,5 @@ public class PeopleService {
     public void deleteById(int id) {
         peopleRepository.deleteById(id);
     }
+
 }

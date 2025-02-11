@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form th:method="PATCH" th:action="@{/books/search}" th:object="${newBook}">
+<form th:method="PUT" th:action="@{/books/search}" th:object="${newBook}">
     <label for="search">Введете поисковый запрос</label>
     <input th:type="text" id="search" th:field="*{title}"/>
     <br/>

@@ -35,16 +35,12 @@ public class BookController {
         List<Book> books;
         if (sort && page != null && booksPerPage != null) {
             books = booksService.findAllPagesAndSorted(page, booksPerPage);
-            // Сортировка и пагинация
         } else if (sort) {
             books = booksService.findAllSort();
-            // Сортировка
         } else if (page != null && booksPerPage != null) {
             books = booksService.findAllPages(page, booksPerPage);
-            // Пагинация
         } else {
             books = booksService.findByAll();
-            // Обычный список книг
         }
         model.addAttribute("books", books);
         return "/books/index";     // выводит всех
@@ -117,7 +113,7 @@ public class BookController {
         return "/books/search";
     }
 
-    @PatchMapping("/search")
+    @PutMapping("/search")
     public String searchCompleted(Model model, @ModelAttribute Book book) {
         model.addAttribute("book", booksService.findByTitleStartingWith(book.getTitle()));
         // Тут книга уже со значением отправляется в поиск
