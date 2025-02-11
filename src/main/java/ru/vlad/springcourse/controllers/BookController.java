@@ -11,6 +11,8 @@ import ru.vlad.springcourse.models.Book;
 import ru.vlad.springcourse.models.Person;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/books")
@@ -30,22 +32,21 @@ public class BookController {
                         @RequestParam(required = false, value = "page") Integer page,
                         @RequestParam(required = false, value = "books_per_page") Integer booksPerPage) {
         // required = false нужен, чтоб можно было писать в поисковике Books без этих параметров и все будет работать
+        List<Book> books;
         if (sort && page != null && booksPerPage != null) {
-            model.addAttribute("books", booksService.findAllPagesAndSorted(page, booksPerPage));
-            return "/books/index";
+            books = booksService.findAllPagesAndSorted(page, booksPerPage);
             // Сортировка и пагинация
-        }
-        if (sort) {
-            model.addAttribute("books", booksService.findAllSort());
-            return "/books/index";
+        } else if (sort) {
+            books = booksService.findAllSort();
             // Сортировка
-        }
-        if (page != null && booksPerPage != null) {
-            model.addAttribute("books", booksService.findAllPages(page, booksPerPage));
-            return "/books/index";
+        } else if (page != null && booksPerPage != null) {
+            books = booksService.findAllPages(page, booksPerPage);
             // Пагинация
+        } else {
+            books = booksService.findByAll();
+            // Обычный список книг
         }
-        model.addAttribute("books", booksService.findByAll());
+        model.addAttribute("books", books);
         return "/books/index";     // выводит всех
     }
 
