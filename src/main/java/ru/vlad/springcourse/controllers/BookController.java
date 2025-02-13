@@ -11,7 +11,6 @@ import ru.vlad.springcourse.models.Book;
 import ru.vlad.springcourse.models.Person;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -113,7 +112,7 @@ public class BookController {
         return "/books/search";
     }
 
-    @PutMapping("/search")
+    @PostMapping("/search")
     public String searchCompleted(Model model, @ModelAttribute Book book) {
         model.addAttribute("book", booksService.findByTitleStartingWith(book.getTitle()));
         // Тут книга уже со значением отправляется в поиск

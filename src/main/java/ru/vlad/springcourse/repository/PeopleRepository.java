@@ -9,8 +9,6 @@ public interface PeopleRepository extends JpaRepository<Person, Integer> {
 
     Person findByName(String name);
 
-    void deleteById(int id);
-
     Person findById(int id);
 
 }

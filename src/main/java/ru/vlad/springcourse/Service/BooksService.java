@@ -28,7 +28,7 @@ public class BooksService {
         return booksRepository.findAll();
     }
 
-    public Book findBuId(int id){
+    public Book findBuId(int id) {
         return booksRepository.findById(id).orElse(null);
     }
 
@@ -60,7 +60,9 @@ public class BooksService {
 
     @Transactional
     public void saveAndFlashUpdate(int id, Book book) {
+        Book updateBook = booksRepository.findById(id).get();
         book.setId(id);
+        book.setOwner(updateBook.getOwner());
         booksRepository.saveAndFlush(book);
     }
 
@@ -77,7 +79,7 @@ public class BooksService {
         return null;
     }
 
-    public List<Book> findAllSort(){
+    public List<Book> findAllSort() {
         return booksRepository.findAll(Sort.by("year"));
     }
 
@@ -86,6 +88,7 @@ public class BooksService {
     }
 
     public List<Book> findAllPagesAndSorted(Integer page, Integer itemsPerPage) {
-        return booksRepository.findAll(PageRequest.of(page, itemsPerPage, Sort.by("year"))).getContent();
+        return booksRepository.findAll(PageRequest.of(page, itemsPerPage, Sort.by("year")))
+                .getContent();
     }
 }
