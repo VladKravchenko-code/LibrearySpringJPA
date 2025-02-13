@@ -13,7 +13,10 @@
     <hr/>
     <strong th:text="'Книги: '"></strong>
     <div th:each="book : ${books.get()}">
-        <p th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">user</p>
+        <p th:if="${book.getOverdue()}" style="color:red"
+           th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">user</p>
+        <p th:if="${!book.getOverdue()}" th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}">
+            user</p>
     </div>
 </div>
 

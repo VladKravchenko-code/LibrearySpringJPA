@@ -6,7 +6,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Table(name = "Book")
@@ -37,7 +37,10 @@ public class Book {
     private Person owner;
 
     @Column(name = "date")
-    private Date date;
+    private LocalDate date;
+
+    @Transient
+    private boolean overdue;
 
     public Book() {
 
@@ -57,17 +60,23 @@ public class Book {
     public void setOwner(Person owner) {
         this.owner = owner;
         if (owner != null){
-            this.date = new Date();
+            this.date = LocalDate.now();
         } else
             this.date = null;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public boolean getOverdue() {
+        long daysBetween = ChronoUnit.DAYS.between(this.date, LocalDate.now());
+        this.overdue = daysBetween >= 10;
+        return overdue;
     }
 
     public int getId() {

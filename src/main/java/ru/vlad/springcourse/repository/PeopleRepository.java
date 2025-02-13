@@ -11,4 +11,6 @@ public interface PeopleRepository extends JpaRepository<Person, Integer> {
 
     void deleteById(int id);
 
+    Person findById(int id);
+
 }
