@@ -107,18 +107,15 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public String search(@ModelAttribute("book") Book book) {
+    public String search() {
         // Пустая книга отправляется в представление
         return "/books/search";
     }
 
     @PostMapping("/search")
-    public String searchCompleted(Model model, @ModelAttribute Book book) {
-        model.addAttribute("book", booksService.findByTitleStartingWith(book.getTitle()));
+    public String searchCompleted(@RequestParam("string") String string, Model model) {
+        model.addAttribute("books", booksService.findByTitleStartingWith(string));
         // Тут книга уже со значением отправляется в поиск
-
-        model.addAttribute("newBook", new Book());
-        // Новая книга, чтоб поиск можно было продолжить
-        return "/books/found";
+        return "/books/search";
     }
 }

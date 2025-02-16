@@ -5,11 +5,29 @@
     <title>Поиск</title>
 </head>
 <body>
-<form th:method="POST" th:action="@{/books/search}" th:object="${book}">
+<form th:method="POST" th:action="@{/books/search}">
     <label for="search">Введете поисковый запрос</label>
-    <input th:type="text" id="search" th:field="*{title}"/>
+    <input th:type="text" id="search" name="string"/>
     <br/>
     <input type="submit" value="Искать!"/>
 </form>
+
+<div th:if="${books}">
+    <div th:if="${books.isEmpty()}">Книг не найдено</div>
+
+    <div th:if="${!books.isEmpty()}">
+        <div th:each="book: ${books}">
+            <p th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}"/>
+            <div th:if="${book.getOwner() == null}">
+                <p>Книга свободна</p>
+            </div>
+            <div th:if="${book.getOwner() != null}">
+                <p th:text="'Книга сейчас у: ' + ${book.getOwner().getName()}">user</p>
+            </div>
+            <hr/>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

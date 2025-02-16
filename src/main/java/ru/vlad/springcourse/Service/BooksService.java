@@ -71,12 +71,8 @@ public class BooksService {
         booksRepository.deleteById(id);
     }
 
-    public Book findByTitleStartingWith(String titleBook) {
-        List<Book> books = booksRepository.findByTitleStartingWith(titleBook);
-        if (!books.isEmpty()) {
-            return books.get(0);
-        }
-        return null;
+    public List<Book> findByTitleStartingWith(String titleBook) {
+        return booksRepository.findByTitleStartingWith(titleBook);
     }
 
     public List<Book> findAllSort() {
