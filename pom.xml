@@ -97,8 +97,8 @@
             <artifactId>spring-data-jpa</artifactId>
             <version>2.4.7</version>
         </dependency>
-</dependencies>
-<build>
-<finalName>LibrearySpringJPA</finalName>
-</build>
-        </project>
+    </dependencies>
+    <build>
+        <finalName>LibrearySpringJPA</finalName>
+    </build>
+</project>
